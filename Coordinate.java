@@ -61,7 +61,7 @@ public class Coordinate {
     }
 
     public int getCostfromstart() {
-        return costfromstart;
+        return this.costfromstart;
     }
 
     public Coordinate getParent() {
@@ -70,8 +70,8 @@ public class Coordinate {
     public void setParent(Coordinate parent) {
         this.parent=parent;
     }
-    public void incrementCostfromstart(int costfromstart) {
-        this.costfromstart = costfromstart + 1 ;
+    public void incrementCostfromstart() {
+        this.costfromstart++;
     }
     public void setCostfromstart(int cost) {
         this.costfromstart=cost;
