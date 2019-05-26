@@ -15,7 +15,6 @@ public class Maze {
         this.N=N;
         this.Maze=new Coordinate[N][N];
 
-
         for (int i=0; i < this.Maze.length; i++){
             for (int j=0; j< this.Maze[i].length; j++){
                 this.Maze[i][j]=new Coordinate(i,j,p);
@@ -210,6 +209,8 @@ public class Maze {
 
         Maze UCS = new Maze(N,p,xStart,yStart,xG1,yG1,xG2,yG2);
         Maze Astar =new Maze(N,p,xStart,yStart,xG1,yG1,xG2,yG2);
+
+        //Set the same cell values to both mazes.
         Astar.setValues(UCS);
 
         SearchAlgorithm.UCS(UCS);

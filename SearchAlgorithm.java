@@ -139,6 +139,7 @@ public class SearchAlgorithm {
                 solution = solution.getParent();
             }
 
+            System.out.println("======================= List of Coordinates that were visited =========================");
             Iterator<Coordinate> iter = path.iterator();
             iter.next();
             while (iter.hasNext()) {
@@ -150,7 +151,7 @@ public class SearchAlgorithm {
             System.out.println("\n\n");
             System.out.println(maze.toString());
         } else {
-            System.out.println("Maze unsolvable ,sorry matey :/");
+            System.out.println("Maze unsolvable.");
         }
 
     }
@@ -282,8 +283,7 @@ public class SearchAlgorithm {
                 solution = solution.getParent();
             }
 
-            System.out.println("=======================Path========================");
-            System.out.println("<==================================================");
+            System.out.println("======================= List of Coordinates that were visited =========================");
             Iterator<Coordinate> iter = path.iterator();
             iter.next();
             while (iter.hasNext()) {
@@ -296,7 +296,8 @@ public class SearchAlgorithm {
             System.out.println("\n\n");
             System.out.println(maze.toString());
         } else {
-            System.out.println("Maze unsolvable ,sorry matey :/");
+            System.out.println(maze.toString());
+            System.out.println("Maze unsolvable.");
         }
     }
 }
