@@ -1,5 +1,5 @@
 import java.util.*;
-import java.lang.Math;
+
 public class Maze {
 
     private Coordinate [][] Maze;
@@ -9,47 +9,24 @@ public class Maze {
     private int N;
     private boolean [][] visited;
 
+
     //constructor
-    public Maze(int N){
-        System.out.println("Give the cell obstacle probability from 0-100. (100 probabilty means that every cell is an obstacle)");
-        Scanner probability = new Scanner(System.in);
-        int p = probability.nextInt();
+    public Maze(int N, int p, Integer xStart, Integer yStart, Integer xG1, Integer yG1, Integer xG2, Integer yG2){
         this.N=N;
         this.Maze=new Coordinate[N][N];
+
 
         for (int i=0; i < this.Maze.length; i++){
             for (int j=0; j< this.Maze[i].length; j++){
                 this.Maze[i][j]=new Coordinate(i,j,p);
             }
         }
+        this.Maze[xStart][yStart].setCellValue(2);
+        Start=this.Maze[xStart][yStart];
 
-        System.out.println("Give the Start coordinates separated with comma. ");
-        Scanner start = new Scanner(System.in);
-        String startCoordinates = start.next();
-        String [] split;
-        split = startCoordinates.split(",");
-        Integer x = Integer.valueOf(split[0]);
-        Integer y = Integer.valueOf(split[1]);
-        this.Maze[x][y].setCellValue(2);
-        Start = this.Maze[x][y];
-
-        System.out.println("Give the G1 coordinates separated with comma. ");
-        Scanner g1 = new Scanner(System.in);
-        String G1Coordinates = g1.next();
-        String [] splitG1;
-        splitG1 = G1Coordinates.split(",");
-        Integer xG1 = Integer.valueOf(splitG1[0]);
-        Integer yG1 = Integer.valueOf(splitG1[1]);
         this.Maze[xG1][yG1].setCellValue(3);
-        G1 = this.Maze[xG1][yG1];
+        G1=this.Maze[xG1][yG1];
 
-        System.out.println("Give the G2 coordinates separated with comma. ");
-        Scanner g2 = new Scanner(System.in);
-        String G2Coordinates = g2.next();
-        String [] splitG2;
-        splitG2 = G2Coordinates.split(",");
-        Integer xG2 = Integer.valueOf(splitG2[0]);
-        Integer yG2 = Integer.valueOf(splitG2[1]);
         this.Maze[xG2][yG2].setCellValue(4);
         G2=this.Maze[xG2][yG2];
 
@@ -64,9 +41,9 @@ public class Maze {
     //toString
     public String toString(){
         String ReturnMaze="";
-        for (int row=0; row < Maze.length; row++){
+        for (int row=0; row < this.N; row++){
             String add="";
-            for (int column=0; column < Maze[row].length; column++){
+            for (int column=0; column < this.N; column++){
                 if(this.Maze[row][column].getCellValue()==1){
                     add+=" "+" 1";
                 }else if(this.Maze[row][column].getCellValue()==2){
@@ -94,6 +71,18 @@ public class Maze {
         return Start;
     }
 
+    public void setStart(Coordinate start) {
+        Start = start;
+    }
+
+    public void setG1(Coordinate g1) {
+        G1 = g1;
+    }
+
+    public void setG2(Coordinate g2) {
+        G2 = g2;
+    }
+
     public Coordinate getG1() {
         return G1;
     }
@@ -102,19 +91,25 @@ public class Maze {
         return G2;
     }
 
+    public void setN(int n) {
+        N = n;
+    }
+
+    public int getN() {
+        return N;
+    }
+    public void setValues(Maze maze){
+        for (int i=0; i <N; i++) {
+            for (int j = 0; j < N; j++) {
+                this.Maze[i][j].setCellValue(maze.getMaze()[i][j].getCellValue());
+            }
+        }
+    }
     public boolean[][] getVisited() {
         return visited;
     }
-    public double calculateDistance(int Xs,int Ys,int Xf,int Yf) {
-    	/*int X=(Xs-Xf)^2;
-    	int Y=(Ys-Yf)^2;
-		double distance=Math.sqrt(X+Y);
-		return distance;*/
-        return Math.sqrt((Ys - Yf) * (Ys - Yf) + (Xs - Xf) * (Xs - Xf));
 
-
-    }
-
+    //==============================Movements==========================================//
     public boolean canMoveLeft(Coordinate Current){
         if(Current.getY()==0){
             return false;
@@ -181,12 +176,44 @@ public class Maze {
         System.out.println("Give an integer for the maze dimensions. (NxN)");
         Scanner dimension = new Scanner(System.in);
         int N= dimension.nextInt();
-        Maze SearchMaze = new Maze(N);
-        System.out.println(SearchMaze.toString());
-        //SearchAlgorithm ucs = new SearchAlgorithm();
-        SearchAlgorithm.UCS(SearchMaze);
-        //SearchAlgorithm.Astar(SearchMaze);
 
+        System.out.println("Give the cell obstacle probability from 0-100. (100 probabilty means that every cell is an obstacle)");
+        Scanner probability = new Scanner(System.in);
+        int p = probability.nextInt();
+
+        System.out.println("Give the Start coordinates separated with comma. ");
+        Scanner start = new Scanner(System.in);
+        String startCoordinates = start.next();
+        String [] split;
+        split = startCoordinates.split(",");
+        Integer xStart = Integer.valueOf(split[0]);
+        Integer yStart = Integer.valueOf(split[1]);
+
+
+        System.out.println("Give the G1 coordinates separated with comma. ");
+        Scanner g1 = new Scanner(System.in);
+        String G1Coordinates = g1.next();
+        String [] splitG1;
+        splitG1 = G1Coordinates.split(",");
+        Integer xG1 = Integer.valueOf(splitG1[0]);
+        Integer yG1 = Integer.valueOf(splitG1[1]);
+
+
+        System.out.println("Give the G2 coordinates separated with comma. ");
+        Scanner g2 = new Scanner(System.in);
+        String G2Coordinates = g2.next();
+        String [] splitG2;
+        splitG2 = G2Coordinates.split(",");
+        Integer xG2 = Integer.valueOf(splitG2[0]);
+        Integer yG2 = Integer.valueOf(splitG2[1]);
+
+
+        Maze UCS = new Maze(N,p,xStart,yStart,xG1,yG1,xG2,yG2);
+        Maze Astar =new Maze(N,p,xStart,yStart,xG1,yG1,xG2,yG2);
+        Astar.setValues(UCS);
+
+        SearchAlgorithm.UCS(UCS);
+        SearchAlgorithm.Astar(Astar);
     }
 
 }

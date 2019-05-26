@@ -4,36 +4,23 @@ public class Coordinate {
 
     private int x;
     private int y;
-    private int cellvalue;
-    private int costfromstart;
+    private int cellValue;
+    private int costFromStart =0;
     private Coordinate parent;
-    private int depth;
-    private double distance;
-    private double totalCost=0; //g(n)+h(n),where g(n) is costfromstart
+    //====== extra fields for A* ===================//
+    private double distanceFromNearestSolution; // H(n).
+    private int parentCostFromStart; // Parent's G(n).
+    private double totalCost=0; //g(n)+h(n),where g(n) is the cost from the Start Coordinate
+
+
     public Coordinate(int f, int s,int p) {
         this.x =f;
         this.y = s;
-        int costfromstart=0;
-        this.cellvalue =CalculateAccess(p);
+        this.cellValue = CalculateAccess(p);
     }
-    public void setDepth(int depth) {
-        this.depth=depth;
-    }
-    public int getDepth() {
-        return this.depth;
-    }
-
-    public void setDistance(double distance1) {
-        this.distance=distance1;
-    }
-    public double getDistance() {
-        return this.distance;
-    }
-    public void setTotalCost(double cost) {
-        this.totalCost=cost;
-    }
-    public double getTotalCost() {
-        return this.totalCost;
+    public Coordinate(int f,int s){
+        this.x=f;
+        this.y=s;
     }
 
     private int CalculateAccess(int p) {
@@ -47,6 +34,34 @@ public class Coordinate {
         }
     }
 
+    //==============================Calculate the Minimum Distance from the two solution coordinates=============//
+    public double calculateMinimumDistanceFromTheTwoSolutions(Coordinate G1,Coordinate G2) {
+        double distanceFromG1=Math.sqrt((this.getX() - G1.getX()) * (this.getX() - G1.getX()) + (this.getY() - G1.getY()) * (this.getY() - G1.getY()));
+        double distanceFromG2=Math.sqrt((this.getX() - G2.getX()) * (this.getX()- G2.getX()) + (this.getY() - G2.getY()) * (this.getY() - G2.getY()));
+        if(distanceFromG1>distanceFromG2){
+            this.distanceFromNearestSolution=distanceFromG2;
+            return distanceFromG2;
+        }
+        this.distanceFromNearestSolution=distanceFromG1;
+        return distanceFromG1;
+    }
+    //==============================Calculate the Total Cost to the solution =============//
+    public double calculateTotalCostFromTheSolution(){
+        this.totalCost=parent.costFromStart+1+this.distanceFromNearestSolution;
+        return this.totalCost;
+    }
+
+    public double getDistanceFromNearestSolution() {
+        return this.distanceFromNearestSolution;
+    }
+    public double getTotalCost() {
+        return this.totalCost;
+    }
+
+    public void setStartCoordinateTotalCost() {
+        this.totalCost = this.distanceFromNearestSolution;
+    }
+
     public int getX() {
         return this.x;
     }
@@ -55,28 +70,43 @@ public class Coordinate {
         return this.y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public int getCellValue() {
-        return this.cellvalue;
+        return this.cellValue;
 
     }
 
-    public int getCostfromstart() {
-        return this.costfromstart;
+    public int getCostFromStart() {
+        return this.costFromStart;
     }
 
     public Coordinate getParent() {
         return this.parent;
     }
+
     public void setParent(Coordinate parent) {
         this.parent=parent;
     }
-    public void incrementCostfromstart() {
-        this.costfromstart++;
+
+    public void setParentCostFromStart(int parentCostFromStart) {
+        this.parentCostFromStart = parentCostFromStart;
     }
-    public void setCostfromstart(int cost) {
-        this.costfromstart=cost;
+
+
+    public void incrementCostFromStart() {
+        this.costFromStart++;
     }
-    public void setCellValue(int cellvalue) {
-        this.cellvalue = cellvalue;
+
+    public void setCostFromStart(int cost) { this.costFromStart =cost; }
+
+    public void setCellValue(int cellValue) {
+        this.cellValue = cellValue;
     }
 }
