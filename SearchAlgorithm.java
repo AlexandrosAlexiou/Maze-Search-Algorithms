@@ -138,7 +138,7 @@ public class SearchAlgorithm {
                 path.add(solution);
                 solution = solution.getParent();
             }
-
+            int pathCost=0;
             System.out.println("======================= List of Coordinates that were visited =========================");
             Iterator<Coordinate> iter = path.iterator();
             iter.next();
@@ -146,11 +146,15 @@ public class SearchAlgorithm {
                 Coordinate current = iter.next();
                 maze.getMaze()[current.getX()][current.getY()].setCellValue(5);
                 System.out.print(current.getX() + "," + current.getY() + " ");
-
+                pathCost++;
             }
+            pathCost+=1;
+            System.out.println("\n");
+            System.out.println("Cost of Path: "+pathCost);
             System.out.println("\n\n");
             System.out.println(maze.toString());
         } else {
+            System.out.println(maze.toString());
             System.out.println("Maze unsolvable.");
         }
 
@@ -282,17 +286,21 @@ public class SearchAlgorithm {
                 path.add(solution);
                 solution = solution.getParent();
             }
-
+            int pathCost=0;
             System.out.println("======================= List of Coordinates that were visited =========================");
             Iterator<Coordinate> iter = path.iterator();
             iter.next();
             while (iter.hasNext()) {
                 Coordinate current = iter.next();
+                pathCost++;
                 maze.getMaze()[current.getX()][current.getY()].setCellValue(5);
                 System.out.print(current.getX() + "," + current.getY());
                 System.out.println();
 
             }
+            System.out.println("\n");
+            pathCost+=1;
+            System.out.println("Cost of Path: "+pathCost);
             System.out.println("\n\n");
             System.out.println(maze.toString());
         } else {
