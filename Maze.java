@@ -216,5 +216,4 @@ public class Maze {
         SearchAlgorithm.UCS(UCS);
         SearchAlgorithm.Astar(Astar);
     }
-
 }

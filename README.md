@@ -7,5 +7,5 @@ We want to reach one target cell (if possible) from the starting cell as quickly
 
 We will use two different algorithms: 
 
-- USC algorithm with all the costs being 1 from every node to another.
+- UCS algorithm with all the costs being 1 from every node to another.
 - A* algorithm heuristic calculation with Euclidean Distance.
